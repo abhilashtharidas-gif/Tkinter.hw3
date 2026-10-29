@@ -1,0 +1,129 @@
+import random
+import tkinter as tk
+
+# Initialize the main window
+root = tk.Tk()
+root.geometry("450x450")
+root.title("Rock Paper Scissor Game")
+root.config(bg="#f0f0f0")
+
+# Possible choices for the game
+choices = ["Rock", "Paper", "Scissor"]
+
+
+# Function that runs when the player makes a choice
+def play(player_choice):
+  # Generate computer's choice randomly
+  computer_choice = random.choice(choices)
+
+  # Determine the winner
+  if player_choice == computer_choice:
+    result = "It's a Tie!"
+    result_label.config(fg="orange")
+  elif (
+      (player_choice == "Rock" and computer_choice == "Scissor")
+      or (player_choice == "Paper" and computer_choice == "Rock")
+      or (player_choice == "Scissor" and computer_choice == "Paper")
+  ):
+    result = "You Win! 🎉"
+    result_label.config(fg="green")
+  else:
+    result = "Computer Wins! 😢"
+    result_label.config(fg="red")
+
+  # Update the labels to show choices and result
+  player_display.config(text=f"Your Choice: {player_choice}")
+  computer_display.config(text=f"Computer's Choice: {computer_choice}")
+  result_label.config(text=result)
+
+
+# Function to reset/restart the game
+def reset_game():
+  player_display.config(text="Your Choice: None")
+  computer_display.config(text="Computer's Choice: None")
+  result_label.config(text="Make your move!", fg="black")
+
+
+# --- UI Elements ---
+
+# Title Label
+title_label = tk.Label(
+    root, text="Rock Paper Scissor", font=("Arial", 18, "bold"), bg="#f0f0f0"
+)
+title_label.pack(pady=15)
+
+# Instruction Label
+instruction_label = tk.Label(
+    root, text="Choose your weapon below:", font=("Arial", 12), bg="#f0f0f0"
+)
+instruction_label.pack(pady=5)
+
+# Frame for Choice Buttons
+btn_frame = tk.Frame(root, bg="#f0f0f0")
+btn_frame.pack(pady=10)
+
+# Rock Button
+rock_btn = tk.Button(
+    btn_frame,
+    text="Rock",
+    font=("Arial", 11, "bold"),
+    bg="#ff9999",
+    width=8,
+    command=lambda: play("Rock"),
+)
+rock_btn.grid(row=0, column=0, padx=5)
+
+# Paper Button
+paper_btn = tk.Button(
+    btn_frame,
+    text="Paper",
+    font=("Arial", 11, "bold"),
+    bg="#99ff99",
+    width=8,
+    command=lambda: play("Paper"),
+)
+paper_btn.grid(row=0, column=1, padx=5)
+
+# Scissor Button
+scissor_btn = tk.Button(
+    btn_frame,
+    text="Scissor",
+    font=("Arial", 11, "bold"),
+    bg="#9999ff",
+    width=8,
+    command=lambda: play("Scissor"),
+)
+scissor_btn.grid(row=0, column=2, padx=5)
+
+# Display Player and Computer Choices Side-by-Side
+display_frame = tk.Frame(root, bg="#f0f0f0")
+display_frame.pack(pady=20)
+
+player_display = tk.Label(
+    display_frame, text="Your Choice: None", font=("Arial", 11), bg="#f0f0f0"
+)
+player_display.pack(side=tk.LEFT, padx=15)
+
+computer_display = tk.Label(
+    display_frame, text="Computer's Choice: None", font=("Arial", 11), bg="#f0f0f0"
+)
+computer_display.pack(side=tk.RIGHT, padx=15)
+
+# Result Label
+result_label = tk.Label(
+    root, text="Make your move!", font=("Arial", 14, "bold"), bg="#f0f0f0"
+)
+result_label.pack(pady=15)
+
+# Reset Button
+reset_btn = tk.Button(
+    root,
+    text="Reset Game",
+    font=("Arial", 11),
+    bg="#ddd",
+    command=reset_game,
+)
+reset_btn.pack(pady=5)
+
+# Run the application loop
+root.mainloop()
